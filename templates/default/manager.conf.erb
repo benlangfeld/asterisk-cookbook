@@ -3,15 +3,15 @@
 ;
 
 [general]
-enabled = <%= node['asterisk']['manager_enabled'] %>
-port = <%= node['asterisk']['manager_port'] %>
-bindaddr = <%= node['asterisk']['manager_ip_address'] %>
-webenabled = <%= node['asterisk']['manager_webenabled'] %>
-timestampevents = <%= node['asterisk']['manager_timestampevents'] %>
+enabled = <%= node['asterisk']['manager']['enabled'] %>
+port = <%= node['asterisk']['manager']['port'] %>
+bindaddr = <%= node['asterisk']['manager']['ip_address'] %>
+webenabled = <%= node['asterisk']['manager']['webenabled'] %>
+timestampevents = <%= node['asterisk']['manager']['timestampevents'] %>
 
-[<%= node['asterisk']['manager_username'] %>]
-secret = <%= node['asterisk']['manager_password'] %>
-deny = <%= node['asterisk']['manager_deny'] %>
-permit = <%= node['asterisk']['manager_permit'] %>
-read = <%= node['asterisk']['manager_read_perms'].join(",") %>
-write = <%= node['asterisk']['manager_write_perms'].join(",") %>
+[<%= node['asterisk']['manager']['username'] %>]
+secret = <%= node['asterisk']['manager']['password'] %>
+deny = <%= node['asterisk']['manager']['deny'] %>
+permit = <%= node['asterisk']['manager']['permit'] %>
+read = <%= node['asterisk']['manager']['read_perms'].join(",") %>
+write = <%= node['asterisk']['manager']['write_perms'].join(",") %>
