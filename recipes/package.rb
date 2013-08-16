@@ -1,20 +1,16 @@
 case node['platform']
-when "ubuntu","debian"
-  if node['asterisk']['use_digium_repo']
-    apt_repository "asterisk" do
-      uri "http://packages.asterisk.org/deb"
-      components ["lucid", "main"]
-      action :add
-    end
-
-    execute "update-asterisk-repo" do
-      command "apt-get update"
+when 'ubuntu', 'debian'
+  if node['asterisk']['package']['use_digium_repo']
+    apt_repository 'asterisk' do
+      uri 'http://packages.asterisk.org/deb'
+      distribution node['lsb']['codename']
+      components %w(main)
+      keyserver 'pgp.mit.edu'
+      key '175E41DF'
     end
   end
 
-  node['asterisk']['packages'].each do |pkg|
-    package pkg do
-      options "--force-yes"
-    end
+  node['asterisk']['package']['debs'].each do |pkg|
+    package pkg
   end
 end
