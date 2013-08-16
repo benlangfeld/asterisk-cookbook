@@ -10,7 +10,7 @@ end
 # http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-11.3.0.tar.gz
 
 remote_file "/usr/local/src/asterisk-#{node['asterisk']['source']['version']}.tar.gz" do
-  source "http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-#{node['asterisk']['source']['version']}.tar.gz"
+  source "http://downloads.asterisk.org/pub/telephony/asterisk/releases/asterisk-#{node['asterisk']['source']['version']}.tar.gz"
 end
 
 bash "prepare_dir" do
