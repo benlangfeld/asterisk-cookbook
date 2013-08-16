@@ -92,7 +92,3 @@ default['asterisk']['unimrcp']['client_port'] = '25097'
 default['asterisk']['unimrcp']['rtp_ip'] = '192.168.10.11'
 default['asterisk']['unimrcp']['rtp_port_min'] = '28000'
 default['asterisk']['unimrcp']['rtp_port_max'] = '29000'
-
-#Install from source settings
-default['asterisk']['source']['packages'] = %w{libssl-dev libncurses5-dev libnewt-dev libxml2-dev libsqlite3-dev}
-default['asterisk']['source']['version'] = '11.3.0'
