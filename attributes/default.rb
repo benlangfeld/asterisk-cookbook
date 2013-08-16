@@ -1,3 +1,4 @@
+default['asterisk']['install_method']   = 'package'
 default['asterisk']['use_digium_repo']  = false
 default['asterisk']['packages']         = ['asterisk', 'asterisk-dev']
 

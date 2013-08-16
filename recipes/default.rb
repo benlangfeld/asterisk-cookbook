@@ -22,3 +22,10 @@ service "asterisk" do
     "logger-reload" => true, "extensions-reload" => true,
     "restart-convenient" => true, "force-reload" => true
 end
+
+case node['asterisk']['install_method']
+  when 'package'
+    include_recipe 'asterisk::package'
+  when 'source'
+    include_recipe 'asterisk::source'
+end
