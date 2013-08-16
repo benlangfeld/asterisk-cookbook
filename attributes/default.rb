@@ -1,8 +1,6 @@
 default['asterisk']['install_method']      = 'package'
 default['asterisk']['enabled_components']  = %w(sip manager modules extensions gtalk jabber)
-
-# uncomment the following to set an explicit public IP for SIP behind NAT. Default is the current host's ip address (or ec2 public IP if on ec2)
-# asterisk[:public_ip] = '1.2.3.4'
+default['asterisk']['external_ip']         = node[:ec2] ? node[:ec2][:public_ipv4] : node[:ipaddress]
 
 
 #Setup the Manager.conf file, refer to: http://www.voip-info.org/tiki-index.php?page=Asterisk%20config%20manager.conf
