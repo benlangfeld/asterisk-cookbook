@@ -1,12 +1,12 @@
 case node['platform']
 when 'ubuntu', 'debian'
-  if node['asterisk']['package']['use_digium_repo']
+  if node['asterisk']['package']['repo']['enable']
     apt_repository 'asterisk' do
-      uri 'http://packages.asterisk.org/deb'
-      distribution node['lsb']['codename']
-      components %w(main)
-      keyserver 'pgp.mit.edu'
-      key '175E41DF'
+      uri node['asterisk']['package']['repo']['url']
+      distribution node['asterisk']['package']['repo']['distro']
+      components node['asterisk']['package']['repo']['branches']
+      keyserver node['asterisk']['package']['repo']['keyserver']
+      key node['asterisk']['package']['repo']['key']
     end
   end
 
