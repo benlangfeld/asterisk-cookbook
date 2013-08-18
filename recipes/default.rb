@@ -48,7 +48,7 @@ end
 template "#{node['asterisk']['prefix']['conf']}/asterisk/asterisk.conf" do
   source 'config/asterisk.conf.erb'
   mode 0644
-  notifies :reload, resources(:service => 'asterisk')
+  notifies :reload, resources(:service => 'asterisk'), :delayed
 end
 
 node['asterisk']['enable_components'].each do |component|
@@ -60,7 +60,7 @@ node['asterisk']['enable_components'].each do |component|
         source "config/#{component}.conf.erb"
         mode 0644
         variables :users => users, :auth => auth[0], :dialplan_contexts => dialplan_contexts
-        notifies :reload, resources(:service => 'asterisk')
+        notifies :reload, resources(:service => 'asterisk'), :delayed
       end
   end
 end
