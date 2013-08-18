@@ -29,10 +29,20 @@ case node['asterisk']['install_method']
 end
 
 service 'asterisk' do
-  supports :restart => true, :reload => true, :status => :true, :debug => :true,
-           'logger-reload' => true, 'extensions-reload' => true,
-           'restart-convenient' => true, 'force-reload' => true
-  action :enable if node['asterisk']['enable_service']
+  supports :restart => true, :reload => true, :status => :true
+  action [:enable] if node['asterisk']['enable_service']
+end
+
+template '/etc/default/asterisk' do
+  source 'init/default-asterisk.erb'
+  mode 0644
+  notifies :restart, resources(:service => 'asterisk'), :delayed
+end
+
+template '/etc/init.d/asterisk' do
+  source 'init/init-asterisk.erb'
+  mode 0755
+  notifies :restart, resources(:service => 'asterisk'), :delayed
 end
 
 template "#{node['asterisk']['prefix']['conf']}/asterisk/asterisk.conf" do

@@ -1,5 +1,10 @@
 #! /bin/sh
-# $Id: rc.debian.asterisk 379790 2013-01-21 20:40:13Z mjordan $
+#
+# This file is managed by Chef for <%= node['fqdn'] %>
+# Do NOT modify this file directly.
+#
+# Sun Aug 18 2013 Bob Ziuchkovski <bob@bz-technology.com>
+# - Templatize for use in chef asterisk cookbook
 #
 # Mon Jun 04 2007 Iñaki Baz Castillo <ibc@in.ilimit.es>
 # - Eliminated SAFE_ASTERISK since it doesn't work as LSB script (it could require a independent "safe_asterisk" init script).
@@ -21,9 +26,9 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 NAME=asterisk
 DESC="Asterisk PBX"
 # Full path to asterisk binary
-DAEMON=/opt/asterisk-11.3.0/sbin/asterisk
-ASTVARRUNDIR=/var/run/asterisk
-ASTETCDIR=/etc/asterisk
+DAEMON=<%= node['asterisk']['prefix']['bin'] %>/sbin/asterisk
+ASTVARRUNDIR=<%= node['asterisk']['prefix']['state'] %>/run/asterisk
+ASTETCDIR=<%= node['asterisk']['prefix']['conf'] %>/asterisk
 TRUE=/bin/true
 
 ### BEGIN INIT INFO
