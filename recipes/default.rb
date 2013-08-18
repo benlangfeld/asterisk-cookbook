@@ -20,12 +20,38 @@
 users = search(:asterisk_users) || []
 auth = search(:auth, 'id:google') || []
 dialplan_contexts = search(:asterisk_contexts) || []
+asterisk_user = node['asterisk']['user']
+asterisk_group = node['asterisk']['group']
 
 case node['asterisk']['install_method']
   when 'package'
     include_recipe 'asterisk::package'
   when 'source'
     include_recipe 'asterisk::source'
+end
+
+user node['asterisk']['user'] do
+  system true
+  shell '/bin/false'
+  home "#{node['asterisk']['prefix']['state']}/lib/asterisk"
+end
+
+group node['asterisk']['group'] do
+  system true
+end
+
+%w(lib/asterisk spool/asterisk run/asterisk log/asterisk).each do |subdir|
+  path = "#{node['asterisk']['prefix']['state']}/#{subdir}"
+  directory path do
+    owner asterisk_user
+    group asterisk_group
+    recursive true
+    only_if { ! File.directory?(path) }
+  end
+  execute "#{path} ownership" do
+    command "chown -Rf #{asterisk_user}:#{asterisk_group} #{path}"
+    only_if { Etc.getpwuid(File.stat(path).uid).name != asterisk_user or Etc.getgrgid(File.stat(path).gid).name != asterisk_group}
+  end
 end
 
 service 'asterisk' do
