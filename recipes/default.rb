@@ -36,7 +36,7 @@ service 'asterisk' do
 end
 
 template "#{node['asterisk']['prefix']['conf']}/asterisk/asterisk.conf" do
-  source 'asterisk.conf.erb'
+  source 'config/asterisk.conf.erb'
   mode 0644
   notifies :reload, resources(:service => 'asterisk')
 end
@@ -47,7 +47,7 @@ node['asterisk']['enable_components'].each do |component|
       include_recipe 'aterisk::unimrcp'
     else
       template "#{node['asterisk']['prefix']['conf']}/asterisk/#{component}.conf" do
-        source "#{component}.conf.erb"
+        source "config/#{component}.conf.erb"
         mode 0644
         variables :users => users, :auth => auth[0], :dialplan_contexts => dialplan_contexts
         notifies :reload, resources(:service => 'asterisk')
