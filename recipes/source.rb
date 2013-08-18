@@ -1,6 +1,6 @@
 case node['platform']
 when 'ubuntu', 'debian'
-  node['asterisk']['source']['packages'].each do |pkg|
+  node['asterisk']['source']['build_deps'].each do |pkg|
     package pkg
   end
 end
