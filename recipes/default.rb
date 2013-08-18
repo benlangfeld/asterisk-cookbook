@@ -21,12 +21,6 @@ users = search(:asterisk_users) || []
 auth = search(:auth, 'id:google') || []
 dialplan_contexts = search(:asterisk_contexts) || []
 
-service "asterisk" do
-  supports :restart => true, :reload => true, :status => :true, :debug => :true,
-    "logger-reload" => true, "extensions-reload" => true,
-    "restart-convenient" => true, "force-reload" => true
-end
-
 case node['asterisk']['install_method']
   when 'package'
     include_recipe 'asterisk::package'
@@ -34,12 +28,25 @@ case node['asterisk']['install_method']
     include_recipe 'asterisk::source'
 end
 
-node['asterisk']['enabled_components'].each do |component|
+service 'asterisk' do
+  supports :restart => true, :reload => true, :status => :true, :debug => :true,
+           'logger-reload' => true, 'extensions-reload' => true,
+           'restart-convenient' => true, 'force-reload' => true
+  action :enable if node['asterisk']['enable_service']
+end
+
+template "#{node['asterisk']['prefix']['conf']}/asterisk/asterisk.conf" do
+  source 'asterisk.conf.erb'
+  mode 0644
+  notifies :reload, resources(:service => 'asterisk')
+end
+
+node['asterisk']['enable_components'].each do |component|
   case component
     when 'unimrcp'
       include_recipe 'aterisk::unimrcp'
     else
-      template "/etc/asterisk/#{component}.conf" do
+      template "#{node['asterisk']['prefix']['conf']}/asterisk/#{component}.conf" do
         source "#{component}.conf.erb"
         mode 0644
         variables :users => users, :auth => auth[0], :dialplan_contexts => dialplan_contexts

@@ -1,7 +1,12 @@
 default['asterisk']['install_method']      = 'package'
-default['asterisk']['enabled_components']  = %w(sip manager modules extensions gtalk jabber)
+default['asterisk']['enable_service']      = true
+default['asterisk']['enable_components']   = %w(sip manager modules extensions gtalk jabber)
 default['asterisk']['external_ip']         = node[:ec2] ? node[:ec2][:public_ipv4] : node[:ipaddress]
 
+# Install paths.  Defaults correspond to package installs.
+default['asterisk']['prefix']['bin']       = '/usr'
+default['asterisk']['prefix']['conf']      = '/etc'
+default['asterisk']['prefix']['state']     = '/var'
 
 #Setup the Manager.conf file, refer to: http://www.voip-info.org/tiki-index.php?page=Asterisk%20config%20manager.conf
 #[general]
