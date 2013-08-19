@@ -17,9 +17,9 @@
 # limitations under the License.
 #
 
-users = search(:asterisk_users) || []
-auth = search(:auth, 'id:google') || []
-dialplan_contexts = search(:asterisk_contexts) || []
+#users = search(:asterisk_users) || []
+#auth = search(:auth, 'id:google') || []
+#dialplan_contexts = search(:asterisk_contexts) || []
 asterisk_user = node['asterisk']['user']
 asterisk_group = node['asterisk']['group']
 
@@ -85,7 +85,7 @@ node['asterisk']['enable_components'].each do |component|
       template "#{node['asterisk']['prefix']['conf']}/asterisk/#{component}.conf" do
         source "config/#{component}.conf.erb"
         mode 0644
-        variables :users => users, :auth => auth[0], :dialplan_contexts => dialplan_contexts
+        #variables :users => users, :auth => auth[0], :dialplan_contexts => dialplan_contexts
         notifies :reload, resources(:service => 'asterisk'), :delayed
       end
   end
