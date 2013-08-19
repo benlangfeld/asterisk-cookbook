@@ -4,6 +4,7 @@ default['asterisk']['source']['checksum'] = '35b7dd5d21449384ebcab631915a844d631
 default['asterisk']['source']['build_deps'] = %w{
   build-essential
   libssl-dev
+  libcurl4-openssl-dev
   libncurses5-dev
   libnewt-dev
   libxml2-dev
