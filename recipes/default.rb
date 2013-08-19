@@ -54,21 +54,21 @@ end
   end
 end
 
-service 'asterisk' do
-  supports :restart => true, :reload => true, :status => :true
-  action [:enable] if node['asterisk']['enable_service']
-end
-
 template '/etc/default/asterisk' do
   source 'init/default-asterisk.erb'
   mode 0644
-  notifies :restart, resources(:service => 'asterisk'), :delayed
 end
 
 template '/etc/init.d/asterisk' do
   source 'init/init-asterisk.erb'
   mode 0755
-  notifies :restart, resources(:service => 'asterisk'), :delayed
+end
+
+service 'asterisk' do
+  supports :restart => true, :reload => true, :status => :true
+  action [:enable] if node['asterisk']['enable_service']
+  subscribes :restart, resources(:template => '/etc/default/asterisk'), :delayed
+  subscribes :restart, resources(:template => '/etc/init.d/asterisk'), :delayed
 end
 
 template "#{node['asterisk']['prefix']['conf']}/asterisk/asterisk.conf" do

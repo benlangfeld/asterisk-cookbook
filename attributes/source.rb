@@ -12,3 +12,6 @@ default['asterisk']['source']['build_deps'] = %w{
 
 # 'url' can be set to specify an absolute download url
 default['asterisk']['source']['url']      = nil
+
+# Should the sample config files be installed?
+default['asterisk']['source']['install_samples'] = true

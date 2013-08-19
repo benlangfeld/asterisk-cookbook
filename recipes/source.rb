@@ -53,7 +53,6 @@ bash 'install_asterisk' do
     ./configure #{config_flags.join(' ')}
     make
     make install
-    make config
-    make samples
+    #{'make samples' if node['asterisk']['source']['install_samples']}
   EOH
 end
