@@ -1,6 +1,15 @@
 default['asterisk']['install_method']      = 'package'
 default['asterisk']['enable_service']      = true
-default['asterisk']['enable_components']   = %w(sip manager modules extensions gtalk jabber)
+
+# Which components/templates to configure
+default['asterisk']['configure']['sip']        = true
+default['asterisk']['configure']['manager']    = true
+default['asterisk']['configure']['modules']    = true
+default['asterisk']['configure']['extensions'] = true
+default['asterisk']['configure']['gtalk']      = true
+default['asterisk']['configure']['jabber']     = true
+
+# Allow user to specify external IP
 default['asterisk']['external_ip']         = node[:ec2] ? node[:ec2][:public_ipv4] : node[:ipaddress]
 
 # Ownership / run-as user

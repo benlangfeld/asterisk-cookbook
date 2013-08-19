@@ -77,7 +77,9 @@ template "#{node['asterisk']['prefix']['conf']}/asterisk/asterisk.conf" do
   notifies :reload, resources(:service => 'asterisk'), :delayed
 end
 
-node['asterisk']['enable_components'].each do |component|
+node['asterisk']['configure'].each do |component, enabled|
+  next unless enabled
+
   case component
     when 'unimrcp'
       include_recipe 'aterisk::unimrcp'
