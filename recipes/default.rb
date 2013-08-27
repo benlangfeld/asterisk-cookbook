@@ -78,7 +78,7 @@ template "#{node['asterisk']['prefix']['conf']}/asterisk/asterisk.conf" do
 end
 
 node['asterisk']['configure'].each do |component, enabled|
-  next unless enabled
+  next unless enabled == true
 
   case component
     when 'unimrcp'
