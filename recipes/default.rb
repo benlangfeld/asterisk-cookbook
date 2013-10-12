@@ -17,8 +17,78 @@
 # limitations under the License.
 #
 
-service "asterisk" do
-  supports :restart => true, :reload => true, :status => :true, :debug => :true,
-    "logger-reload" => true, "extensions-reload" => true,
-    "restart-convenient" => true, "force-reload" => true
+#users = search(:asterisk_users) || []
+#auth = search(:auth, 'id:google') || []
+#dialplan_contexts = search(:asterisk_contexts) || []
+asterisk_user = node['asterisk']['user']
+asterisk_group = node['asterisk']['group']
+
+case node['asterisk']['install_method']
+  when 'package'
+    include_recipe 'asterisk::package'
+  when 'source'
+    include_recipe 'asterisk::source'
+end
+
+user node['asterisk']['user'] do
+  system true
+  shell '/bin/false'
+  home "#{node['asterisk']['prefix']['state']}/lib/asterisk"
+end
+
+group node['asterisk']['group'] do
+  system true
+end
+
+%w(lib/asterisk spool/asterisk run/asterisk log/asterisk).each do |subdir|
+  path = "#{node['asterisk']['prefix']['state']}/#{subdir}"
+  directory path do
+    owner asterisk_user
+    group asterisk_group
+    recursive true
+    only_if { ! File.directory?(path) }
+  end
+  execute "#{path} ownership" do
+    command "chown -Rf #{asterisk_user}:#{asterisk_group} #{path}"
+    only_if { Etc.getpwuid(File.stat(path).uid).name != asterisk_user or Etc.getgrgid(File.stat(path).gid).name != asterisk_group}
+  end
+end
+
+template '/etc/default/asterisk' do
+  source 'init/default-asterisk.erb'
+  mode 0644
+end
+
+template '/etc/init.d/asterisk' do
+  source 'init/init-asterisk.erb'
+  mode 0755
+end
+
+service 'asterisk' do
+  supports :restart => true, :reload => true, :status => :true
+  action [:enable] if node['asterisk']['enable_service']
+  subscribes :restart, resources(:template => '/etc/default/asterisk'), :delayed
+  subscribes :restart, resources(:template => '/etc/init.d/asterisk'), :delayed
+end
+
+template "#{node['asterisk']['prefix']['conf']}/asterisk/asterisk.conf" do
+  source 'config/asterisk.conf.erb'
+  mode 0644
+  notifies :reload, resources(:service => 'asterisk'), :delayed
+end
+
+node['asterisk']['configure'].each do |component, enabled|
+  next unless enabled == true
+
+  case component
+    when 'unimrcp'
+      include_recipe 'aterisk::unimrcp'
+    else
+      template "#{node['asterisk']['prefix']['conf']}/asterisk/#{component}.conf" do
+        source "config/#{component}.conf.erb"
+        mode 0644
+        #variables :users => users, :auth => auth[0], :dialplan_contexts => dialplan_contexts
+        notifies :reload, resources(:service => 'asterisk'), :delayed
+      end
+  end
 end

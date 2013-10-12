@@ -1,0 +1,116 @@
+; This file is managed by Chef for <%= node['fqdn'] %>
+; Do NOT modify this file directly.
+
+[general]
+context = <%= node['asterisk']['sip']['context']  %>
+allowguest = <%= node['asterisk']['sip']['allowguest'] %>
+allowoverlap = <%= node['asterisk']['sip']['allowoverlap'] %>
+allowtransfer = <%= node['asterisk']['sip']['allowtransfer'] %>
+bindport = <%= node['asterisk']['sip']['bindport'] %>
+bindaddr = <%= node['asterisk']['sip']['bindaddr'] %>
+localnet = 192.168.1.0/255.255.255.0
+tcpenable = <%= node['asterisk']['sip']['tcpenable'] %>
+tcpbindaddr = <%= node['asterisk']['sip']['bindaddr'] %>
+srvlookup = <%= node['asterisk']['sip']['srvlookup'] %>
+pedantic = <%= node['asterisk']['sip']['pedantic'] %>
+tos_sip = <%= node['asterisk']['sip']['tos_sip'] %>
+tos_audio = <%= node['asterisk']['sip']['tos_audio'] %>
+tos_video = <%= node['asterisk']['sip']['tos_video'] %>
+maxexpiry = <%= node['asterisk']['sip']['maxexpiry'] %>
+minexpirey = <%= node['asterisk']['sip']['minepxiry'] %>
+defaultexpiry = <%= node['asterisk']['sip']['defaultexpiry'] %>
+t1min = <%= node['asterisk']['sip']['t1min'] %>
+notifymimetype = <%= node['asterisk']['sip']['notifymimetype'] %>
+checkmwi = <%= node['asterisk']['sip']['checkmwi'] %>
+buggymwi = <%= node['asterisk']['sip']['buggymwi'] %>
+vmexten = <%= node['asterisk']['sip']['vmexten'] %>
+disallow = <%= node['asterisk']['sip']['disallow'] %>
+<% node['asterisk']['sip']['allow'].each do |allow| %>
+allow = <%= allow -%>
+
+<% end %>
+mohinterpret = <%= node['asterisk']['sip']['mohinterpret'] %>
+mohsuggest = <%= node['asterisk']['sip']['mohsuggest'] %>
+language = <%= node['asterisk']['sip']['lanugage'] %>
+relaxdtmf = <%= node['asterisk']['sip']['relaxdtmf'] %>
+trustpid = <%= node['asterisk']['sip']['trustpid'] %>
+sendrpid = <%= node['asterisk']['sip']['sendrpid'] %>
+progressinband = <%= node['asterisk']['sip']['progressinband'] %>
+useragent = <%= node['asterisk']['sip']['useragent'] %>
+promiscredir = <%= node['asterisk']['sip']['promiscredir'] %>
+usereqphone = <%= node['asterisk']['sip']['usereqphone'] %>
+dtmfmode = <%= node['asterisk']['sip']['dtmfmode'] %>
+compactheaders = <%= node['asterisk']['sip']['compactheaders'] %>
+videosupport = <%= node['asterisk']['sip']['videosupport'] %>
+maxcallbitrate = <%= node['asterisk']['sip']['maxcallbitrate'] %>
+callevents = <%= node['asterisk']['sip']['callevents'] %>
+alwaysauthreject = <%= node['asterisk']['sip']['alwaysauthreject'] %>
+g726nonstandard = <%= node['asterisk']['sip']['g726nonstandard'] %>
+matchexterniplocally = <%= node['asterisk']['sip']['matchexterniplocally'] %>
+regcontext = <%= node['asterisk']['sip']['regcontext'] %>
+rtptimeout = <%= node['asterisk']['sip']['rtptimeout'] %>
+rtpholdtimeout = <%= node['asterisk']['sip']['rtpholdtimeout'] %>
+rtpkeepalive = <%= node['asterisk']['sip']['rtpkeepalive'] %>
+sipdebug = <%= node['asterisk']['sip']['sipdebug'] %>
+recordhistory = <%= node['asterisk']['sip']['recordhistory'] %>
+dumphistory = <%= node['asterisk']['sip']['dumphistory'] %>
+allowsubscribe = <%= node['asterisk']['sip']['allowsubscribe'] %>
+subscribecontext = <%= node['asterisk']['sip']['subscribecontext'] %>
+notifyringing = <%= node['asterisk']['sip']['notifyringing'] %>
+notifyhold = <%= node['asterisk']['sip']['notifyhold'] %>
+limitonpeers = <%= node['asterisk']['sip']['limitonpeers'] %>
+t38pt_udptl = <%= node['asterisk']['sip']['t38pt_udptl'] %>
+
+externip = <%= node['asterisk']['external_ip'] %>	; Address that we're going to put in outbound SIP
+
+
+
+;----------------------------------------- REALTIME SUPPORT ------------------------
+; For additional information on ARA, the Asterisk Realtime Architecture,
+; please read realtime.txt and extconfig.txt in the /doc directory of the
+; source code.
+;
+;rtcachefriends=yes		; Cache realtime friends by adding them to the internal list
+				; just like friends added from the config file only on a
+				; as-needed basis? (yes|no)
+
+;rtsavesysname=yes		; Save systemname in realtime database at registration
+				; Default= no
+
+;rtupdate=yes			; Send registry updates to database using realtime? (yes|no)
+				; If set to yes, when a SIP UA registers successfully, the ip address,
+				; the origination port, the registration period, and the username of
+				; the UA will be set to database via realtime.
+				; If not present, defaults to 'yes'.
+;rtautoclear=yes		; Auto-Expire friends created on the fly on the same schedule
+				; as if it had just registered? (yes|no|<seconds>)
+				; If set to yes, when the registration expires, the friend will
+				; vanish from the configuration until requested again. If set
+				; to an integer, friends expire within this number of seconds
+				; instead of the registration interval.
+
+;ignoreregexpire=yes		; Enabling this setting has two functions:
+				;
+				; For non-realtime peers, when their registration expires, the
+				; information will _not_ be removed from memory or the Asterisk database
+				; if you attempt to place a call to the peer, the existing information
+				; will be used in spite of it having expired
+				;
+				; For realtime peers, when the peer is retrieved from realtime storage,
+				; the registration information will be used regardless of whether
+				; it has expired or not; if it expires while the realtime peer
+				; is still in memory (due to caching or other reasons), the
+				; information will not be removed from realtime storage
+
+
+[authentication]
+
+<% @users.each do |user| %>
+[<%= user['username'] %>]
+defaultuser=<%= user['username'] %>
+secret=<%= user['password'] %>
+type=friend
+callerid="<%= user['full_name'] %> <<%= user['username'] %>>"
+host=dynamic
+context=<%= user['context'] %>
+<% end %>
