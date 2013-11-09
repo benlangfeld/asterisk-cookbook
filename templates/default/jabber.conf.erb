@@ -1,12 +1,12 @@
 [general]
 autoregister=yes
 
-<% if @auth %>
+<% if node['asterisk']['auth'] %>
 [google]
 type=client
 serverhost=talk.google.com
-username=<%= @auth['username'] %>/Talk
-secret=<%= @auth['password'] %>
+username=<%= node['asterisk']['auth']['username'] %>/Talk
+secret=<%= node['asterisk']['auth']['password'] %>
 port=5222
 statusmessage=Asterisk Server - Not a Human
 status=xaway

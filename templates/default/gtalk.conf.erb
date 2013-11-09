@@ -6,9 +6,9 @@ allowguest=yes
 disallow=all
 allow=ulaw
 
-<% if @auth %>
+<% if node['asterisk']['auth'] %>
 [gtalk]
-username=<%= @auth['username'] %>
+username=<%= node['asterisk']['auth']['username'] %>
 disallow=all
 allow=ulaw
 context=google-in

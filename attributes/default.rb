@@ -6,6 +6,20 @@ default['asterisk']['package']['repo']['branches']  = %w(main)
 default['asterisk']['package']['repo']['keyserver'] = 'pgp.mit.edu'
 default['asterisk']['package']['repo']['key']       = '175E41DF'
 
+#Config files we should manage
+default['asterisk']['configure']['extensions'] = true
+default['asterisk']['configure']['gtalk']      = true
+default['asterisk']['configure']['jabber']     = true
+default['asterisk']['configure']['manager']    = true
+default['asterisk']['configure']['modules']    = true
+default['asterisk']['configure']['mrcp']       = false
+default['asterisk']['configure']['sip']        = true
+
+# Users and dialplans.  Configrable as attributes or from data bags
+default['asterisk']['users']                   = nil
+default['asterisk']['auth']                    = nil
+default['asterisk']['dialplan_contexts']       = nil
+
 #Setup the Manager.conf file, refer to: http://www.voip-info.org/tiki-index.php?page=Asterisk%20config%20manager.conf
 #[general]
 default['asterisk']['manager_enabled']         = 'yes'
@@ -83,8 +97,8 @@ default['asterisk']['sip_conf_t38pt_udptl']          = 'yes'
 default['asterisk']['sip_providers'] = Mash.new
 default['asterisk']['sip_providers']['flowroute'] = Mash.new(:type => 'friend', :host => 'sip.flowroute.com', :dtmf_mode => 'rfc2833', :context => 'flowroute', :canreinvite => 'no', :allowed_codecs => ['ulaw', 'g729'], :insecure => 'port,invite', :qualify => 'yes')
 
-# uncomment the following to set an explicit public IP for SIP behind NAT. Default is the current host's ip address (or ec2 public IP if on ec2)
-# asterisk[:public_ip] = '1.2.3.4'
+# Sensible defaults for public ip
+default['asterisk']['public_ip'] = node['ec2'] ? node['ec2']['public_ipv4'] : node['ipaddress']
 
 # UniMRCP settings
 default['asterisk']['unimrcp']['version'] = '1.0.0'

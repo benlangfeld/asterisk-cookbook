@@ -58,7 +58,7 @@ notifyhold = <%= node['asterisk']['sip_conf_notifyhold'] %>
 limitonpeers = <%= node['asterisk']['sip_conf_limitonpeers'] %>
 t38pt_udptl = <%= node['asterisk']['sip_conf_t38pt_udptl'] %>
 
-externip = <%= @external_ip %>	; Address that we're going to put in outbound SIP
+externip = <%= node['asterisk']['public_ip'] %>	; Address that we're going to put in outbound SIP
 
 
 
@@ -102,7 +102,7 @@ externip = <%= @external_ip %>	; Address that we're going to put in outbound SIP
 
 [authentication]
 
-<% @users.each do |user| %>
+<% node['asterisk']['users'].each do |user| %>
 [<%= user['username'] %>]
 defaultuser=<%= user['username'] %>
 secret=<%= user['password'] %>

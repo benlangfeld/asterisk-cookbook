@@ -1,3 +1,5 @@
+node.default['asterisk']['configure']['mrcp'] = true
+
 case node['platform']
 when "ubuntu","debian"
   node['asterisk']['unimrcp']['packages'].each do |pkg|
@@ -96,10 +98,4 @@ bash "ldconfig" do
   code <<-EOH
     ldconfig
   EOH
-end
-
-template "/etc/asterisk/mrcp.conf" do
-  source "mrcp.conf.erb"
-  mode 0644
-  notifies :reload, resources(:service => "asterisk")
 end
