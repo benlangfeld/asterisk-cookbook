@@ -1,7 +1,7 @@
 default['asterisk']['package']['names'] = case platform_family
 when 'debian'
   %w(asterisk asterisk-dev)
-when 'rhel'
+when 'rhel', 'fedora'
   %w(asterisk asterisk-devel)
 end
 

@@ -9,6 +9,8 @@ provisioner:
 
 platforms:
   - name: centos-6.5
+  - name: fedora-19
+  - name: fedora-20
   - name: ubuntu-12.04
     run_list: apt::default
   - name: ubuntu-10.04
