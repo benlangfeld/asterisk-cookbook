@@ -2,7 +2,7 @@ default['asterisk']['package']['names'] = case platform_family
 when 'debian'
   %w(asterisk asterisk-dev)
 when 'rhel', 'fedora'
-  %w(asterisk asterisk-devel)
+  %w(asterisk asterisk-devel sox)
 end
 
 default['asterisk']['package']['repo']['enable']    = false

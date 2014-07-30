@@ -1,0 +1,7 @@
+name             'asterisk-test'
+maintainer       'Chef Software, Inc.'
+maintainer_email 'jdunn@getchef.com'
+license          'Apache 2.0'
+description      'Test fixture cookbook'
+long_description 'Test fixture cookbook'
+version          '0.1.0'
