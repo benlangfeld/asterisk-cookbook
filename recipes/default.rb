@@ -9,13 +9,14 @@ group asterisk_group do
   system true
 end
 
+include_recipe "asterisk::#{node['asterisk']['install_method']}"
+
 service "asterisk" do
   supports :restart => true, :reload => true, :status => :true, :debug => :true,
     "logger-reload" => true, "extensions-reload" => true,
     "restart-convenient" => true, "force-reload" => true
+  action :enable
 end
-
-include_recipe "asterisk::#{node['asterisk']['install_method']}"
 
 %w(lib/asterisk spool/asterisk run/asterisk log/asterisk).each do |subdir|
   path = "#{node['asterisk']['prefix']['state']}/#{subdir}"
