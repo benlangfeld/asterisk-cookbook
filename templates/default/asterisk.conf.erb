@@ -3,7 +3,7 @@
 
 [directories]
 astetcdir => <%= node['asterisk']['prefix']['conf'] %>/asterisk
-astmoddir => <%= node['asterisk']['prefix']['bin'] %>/lib/asterisk/modules
+astmoddir => <%= node['asterisk']['prefix']['bin'] %>/<%= @lib_dir %>/asterisk/modules
 astagidir => <%= node['asterisk']['prefix']['bin'] %>/share/asterisk/agi-bin
 astvarlibdir => <%= node['asterisk']['prefix']['state'] %>/lib/asterisk
 astdatadir => <%= node['asterisk']['prefix']['state'] %>/lib/asterisk
