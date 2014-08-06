@@ -13,6 +13,7 @@ depends 'apt', '~> 2.2'
 depends 'build-essential'
 depends 'unimrcp', '~> 1.0'
 depends 'yum', '~> 3.0'
+depends 'yum-epel'
 
 supports 'debian', '>= 7.1'
 supports 'ubuntu', '>= 10.04'

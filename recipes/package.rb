@@ -9,15 +9,7 @@ when 'debian'
     only_if { node['asterisk']['package']['repo']['enable'] }
   end
 when 'rhel'
-  node['asterisk']['package']['repo']['urls'].each do |name, url|
-    yum_repository name do
-      description "Asterisk yum repo"
-      baseurl url
-      gpgcheck false
-      action :create
-      only_if { node['asterisk']['package']['repo']['enable'] }
-    end
-  end
+  include_recipe 'yum-epel'
 end
 
 node['asterisk']['package']['names'].each do |pkg|
