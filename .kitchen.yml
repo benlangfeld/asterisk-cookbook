@@ -22,7 +22,15 @@ platforms:
     run_list: apt::default
 
 suites:
-- name: package
+- name: package-native
+  run_list: ['recipe[asterisk]']
+  attributes: {
+    asterisk: {
+      install_method: 'package'
+    }
+  }
+
+- name: package-digium
   run_list: ['recipe[asterisk]']
   attributes: {
     asterisk: {
@@ -34,6 +42,8 @@ suites:
       }
     }
   }
+  excludes: ["fedora-19", "fedora-20"]
+
 - name: source
   run_list: ['recipe[asterisk]']
   attributes: {
