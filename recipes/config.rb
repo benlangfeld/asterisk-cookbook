@@ -1,9 +1,5 @@
-def data_bag_items(bag_name)
-  data_bag(bag_name).map { |id| data_bag_item bag_name, id }
-end
-
-users = data_bag_items(:asterisk_users)
-dialplan_contexts = data_bag_items(:asterisk_contexts)
+users = search(:asterisk_users)
+dialplan_contexts = search(:asterisk_contexts)
 config_dir = "#{node['asterisk']['prefix']['conf']}/asterisk"
 
 if platform_family?('rhel', 'fedora')
