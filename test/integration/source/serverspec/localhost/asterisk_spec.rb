@@ -16,31 +16,6 @@ describe 'asterisk' do
     it { should be_listening.with('udp') }
   end
 
-  describe file("/etc/asterisk/extensions.conf") do
-    it {
-      should contain(<<-CONTEXT
-[adhearsion]
-exten => _.,1,AGI(agi:async)
-      CONTEXT
-      )
-    }
-  end
-
-  describe file("/etc/asterisk/sip.conf") do
-    it {
-      should contain(<<-CONTEXT
-[usera]
-defaultuser=usera
-secret=usera
-type=friend
-callerid="User A <usera>"
-host=dynamic
-context=adhearsion
-      CONTEXT
-      )
-    }
-  end
-
   describe package('sox') do
     it { should be_installed }
   end

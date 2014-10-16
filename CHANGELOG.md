@@ -1,4 +1,5 @@
 # develop
+  * Remove reading of contexts/users from databags. These should be replaced by included files per context/user and potentially a LWRP.
 
 # 1.1.1
   * Attribute typo in template

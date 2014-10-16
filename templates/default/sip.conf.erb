@@ -100,13 +100,3 @@ externip = <%= node['asterisk']['public_ip'] %>  ; Address that we're going to p
 
 
 [authentication]
-
-<% @users.each do |user| %>
-[<%= user['username'] %>]
-defaultuser=<%= user['username'] %>
-secret=<%= user['password'] %>
-type=friend
-callerid="<%= user['full_name'] %> <<%= user['username'] %>>"
-host=dynamic
-context=<%= user['context'] %>
-<% end %>

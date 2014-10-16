@@ -1,9 +1,3 @@
-def data_bag_items(bag_name)
-  data_bag(bag_name).map { |id| data_bag_item bag_name, id }
-end
-
-users = data_bag_items(:asterisk_users)
-dialplan_contexts = data_bag_items(:asterisk_contexts)
 config_dir = "#{node['asterisk']['prefix']['conf']}/asterisk"
 
 if platform_family?('rhel', 'fedora')
@@ -27,7 +21,6 @@ end
   template "#{config_dir}/#{template_file}.conf" do
     source "#{template_file}.conf.erb"
     mode 0644
-    variables :users => users, :dialplan_contexts => dialplan_contexts
     notifies :reload, resources('service[asterisk]')
   end
 end
