@@ -48,7 +48,7 @@ bash "install_asterisk" do
     tar zxf #{source_path}
     cd #{'certified-' if certified}asterisk-#{version =~ /(\d*)-current/ ? "#{$1}.*" : version}
     ./contrib/scripts/install_prereq install
-    ./configure --prefix=#{node['asterisk']['prefix']['bin']} --sysconfdir=#{node['asterisk']['prefix']['conf']} --localstatedir=#{node['asterisk']['prefix']['state']}
+    ./configure --prefix=#{node['asterisk']['prefix']['bin']} --sysconfdir=#{node['asterisk']['prefix']['conf']} --localstatedir=#{node['asterisk']['prefix']['state']} #{node['asterisk']['source']['configure_opts']}
     make
     make install
     make config

@@ -25,6 +25,7 @@ Add `recipe[asterisk]` to your node's run list. Optionally add `recipe[asterisk:
 * `node['asterisk']['source']['checksum']` - the checksum of the source distribution (default `80aa523bdaab71ce419022d8c851aaeda718dc5bbf5fe8cb99786da546dd8cee`)
 * `node['asterisk']['source']['url']` - the url from which to download Asterisk (default `nil`)
 * `node['asterisk']['source']['install_samples']` - wether or not to install sample config (default `true`)
+* `node['asterisk']['source']['configure_opts']` - additional configuration options to pass to asterisk (default `nil`)
 
 ## Package install attributes
 

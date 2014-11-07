@@ -1,5 +1,6 @@
 # develop
   * Enable installation of Certified Asterisk.
+  * Allow passing configuration attributes to install from source.
 
 # 1.1.1
   * Attribute typo in template

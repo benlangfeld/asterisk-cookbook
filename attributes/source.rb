@@ -12,3 +12,6 @@ default['asterisk']['source']['url'] = nil
 
 # Should the sample config files be installed?
 default['asterisk']['source']['install_samples'] = true
+
+# Additional configure options
+default['asterisk']['source']['configure_opts'] = nil
