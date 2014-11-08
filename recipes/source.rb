@@ -18,6 +18,13 @@ source_url = node['asterisk']['source']['url'] ||
     source_url_prefix + source_tarball
 source_path = "#{Chef::Config['file_cache_path'] || '/tmp'}/#{source_tarball}"
 
+menuselect_command = nil
+if (!node['asterisk']['source']['enable_opts'].empty? || !node['asterisk']['source']['disable_opts'].empty?)
+  menuselect_command = "menuselect/menuselect "
+  menuselect_command += node['asterisk']['source']['enable_opts'].map {|opt| "--enable #{opt}"}.join(" ")
+  menuselect_command += node['asterisk']['source']['disable_opts'].map {|opt| "--disable #{opt}"}.join(" ")
+end
+
 remote_file source_tarball do
   source source_url
   path source_path
@@ -49,6 +56,8 @@ bash "install_asterisk" do
     cd #{'certified-' if certified}asterisk-#{version =~ /(\d*)-current/ ? "#{$1}.*" : version}
     ./contrib/scripts/install_prereq install
     ./configure --prefix=#{node['asterisk']['prefix']['bin']} --sysconfdir=#{node['asterisk']['prefix']['conf']} --localstatedir=#{node['asterisk']['prefix']['state']} #{node['asterisk']['source']['configure_opts']}
+    #{'make menuselect.makeopts' if menuselect_command}
+    #{menuselect_command}
     make
     make install
     make config

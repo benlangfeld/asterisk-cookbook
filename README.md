@@ -26,6 +26,8 @@ Add `recipe[asterisk]` to your node's run list. Optionally add `recipe[asterisk:
 * `node['asterisk']['source']['url']` - the url from which to download Asterisk (default `nil`)
 * `node['asterisk']['source']['install_samples']` - wether or not to install sample config (default `true`)
 * `node['asterisk']['source']['configure_opts']` - additional configuration options to pass to asterisk (default `nil`)
+* `node['asterisk']['source']['enable_opts']` - modules to pass to menuselect to enable (default [])
+* `node['asterisk']['source']['disable_opts']` - modules to pass to menuselect to disable (default [])
 
 ## Package install attributes
 
