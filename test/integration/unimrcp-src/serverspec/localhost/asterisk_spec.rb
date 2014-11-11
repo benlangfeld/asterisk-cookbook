@@ -17,6 +17,6 @@ describe 'asterisk' do
   end
 
   describe command('sudo asterisk -x "module show like unimrcp"') do
-    it { should return_stdout /2 modules loaded/ }
+    its(:stdout) { should match /2 modules loaded/ }
   end
 end

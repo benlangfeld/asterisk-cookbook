@@ -2,6 +2,7 @@
   * Enable installation of Certified Asterisk.
   * Allow passing configuration attributes to install from source.
   * Allow enabling/disabling build options
+  * Update tests to be compatible with latest version of serverspec
 
 # 1.1.1
   * Attribute typo in template
