@@ -109,4 +109,9 @@ type=friend
 callerid="<%= user['full_name'] %> <<%= user['username'] %>>"
 host=dynamic
 context=<%= user['context'] %>
+<% if user['additional_settings']
+     user['additional_settings'].each do |key, value| %>
+<%= "#{key}=#{value}" %>
+   <% end
+   end %>
 <% end %>

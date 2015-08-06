@@ -6,4 +6,9 @@
   "password": "usera",
   "username": "usera",
   "context": "adhearsion"
+  "additional_settings": {
+    "transport": "ws,wss",
+    "avpf": "yes",
+    "encryption": "yes"
+  }
 }
