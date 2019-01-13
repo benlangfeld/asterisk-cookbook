@@ -1,13 +1,11 @@
-default['asterisk']['package']['names'] = case platform_family
-when 'debian'
-  %w(asterisk asterisk-dev)
-when 'rhel', 'fedora'
-  %w(asterisk asterisk-devel sox)
-end
+default['asterisk']['package']['names'] = value_for_platform_family(
+  'debian' => %w(asterisk asterisk-dev),
+   %w(rhel fedora) => %w(asterisk asterisk-devel sox)
+)
 
 default['asterisk']['package']['repo']['enable']    = false
 
-case platform_family
+case node['platorm_family']
 when 'debian'
   default['asterisk']['package']['repo']['url']       = 'http://packages.asterisk.org/deb'
   default['asterisk']['package']['repo']['distro']    = node['lsb']['codename']
