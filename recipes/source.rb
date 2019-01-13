@@ -37,7 +37,7 @@ ruby_block 'validate asterisk tarball' do
       raise "Checksum mismatch on #{source_path}.  Expected sha256 of #{expected} but found #{actual} instead"
     end
   end
-  only_if { chksum }
+  not_if { chksum.nil? }
 end
 
 bash "install_asterisk" do
