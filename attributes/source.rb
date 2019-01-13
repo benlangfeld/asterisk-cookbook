@@ -1,6 +1,6 @@
 default['asterisk']['source']['packages'] = value_for_platform_family(
-  'debian' => %w{libssl-dev libcurl4-openssl-dev libncurses5-dev libnewt-dev libxml2-dev libsqlite3-dev uuid-dev sox},
-  'rhel' => %w{openssl-devel ncurses-devel newt-devel libxml2-devel sqlite-devel uuid-devel sox}
+  'debian' => %w{libssl-dev libcurl4-openssl-dev libjansson-dev libncurses5-dev libnewt-dev libxml2-dev libsqlite3-dev uuid-dev sox},
+  'rhel' => %w{jansson-devel openssl-devel ncurses-devel newt-devel libxml2-devel sqlite-devel uuid-devel sox}
 )
 
 default['asterisk']['source']['version']  = '11-current'
