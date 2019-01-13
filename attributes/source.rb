@@ -3,8 +3,8 @@ default['asterisk']['source']['packages'] = value_for_platform_family(
   'rhel' => %w{jansson-devel openssl-devel ncurses-devel newt-devel libxml2-devel sqlite-devel uuid-devel sox}
 )
 
-default['asterisk']['source']['version']  = '11-current'
-default['asterisk']['source']['checksum'] = nil
+default['asterisk']['source']['version']  = '13-current'
+default['asterisk']['source']['checksum'] = 'f381b2184579e4f3e0a2f758a5db9b2cdd628fa35b1c9e69d0325047b69790be'
 
 # An full download url can be supplied to specify an alternative source tarball location
 default['asterisk']['source']['url'] = nil
