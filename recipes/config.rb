@@ -6,11 +6,7 @@ users = data_bag_items(:asterisk_users)
 dialplan_contexts = data_bag_items(:asterisk_contexts)
 config_dir = "#{node['asterisk']['prefix']['conf']}/asterisk"
 
-if platform_family?('rhel', 'fedora')
-  lib_dir = node['kernel']['machine'] == 'x86_64' ? 'lib64' : 'lib'
-else
-  lib_dir = 'lib'
-end
+lib_dir = 'lib'
 
 directory config_dir
 
